@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Celestia Hackathon"
+description = "A responsive event website for Celestia, a 24-hour open-innovation hackathon in Bangalore. It introduces the event, shares dates, venue, schedule, prizes, eligibility, and rules, and directs participants to registration."
+version = "1.0.0"
+id = "artifacts/celestia-hackathon"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23650
+
+[services.development]
+run = "pnpm --filter @workspace/celestia-hackathon run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/celestia-hackathon", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/celestia-hackathon/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23650"
+BASE_PATH = "/"
